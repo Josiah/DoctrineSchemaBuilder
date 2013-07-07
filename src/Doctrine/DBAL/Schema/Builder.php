@@ -68,7 +68,7 @@ class Builder
      * @param callable $definition Table definition callback
      * @return Builder
      */
-    public function createTable($name, callable $definition)
+    public function createTable($name, $definition)
     {
         if (!$this->schema->hasTable($name)) {
             call_user_func($definition, $this->schema->createTable($name));
@@ -94,7 +94,7 @@ class Builder
      * @param callable $definition Table definition callback
      * @return Builder
      */
-    public function defineTable($name, callable $definition)
+    public function defineTable($name, $definition)
     {
         $this->dropTable($name);
         call_user_func($definition, $this->schema->createTable($name));
