@@ -1,6 +1,8 @@
 Doctrine Schema Builder
 =======================
 
+[![Build Status](https://travis-ci.org/Josiah/DoctrineSchemaBuilder.png)](https://travis-ci.org/Josiah/DoctrineSchemaBuilder)
+
 Provides a declarative wrapper around the Doctrine DBAL `Schema` class which allows you to define the schema as you would like it to be rather than in terms of what it was.
 
 Example
