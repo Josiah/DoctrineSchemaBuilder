@@ -141,12 +141,12 @@ class BuilderTest extends TestCase
         $builder = new Builder($schema);
         $newTable = null;
 
-        $builder->defineTable('bar', function (Table $table) use (&$oldTable, &$newTable) {
-            $this->assertNotSame($oldTable, $table, 'table definition should be made on a new table instance');
+        $builder->defineTable('bar', function (Table $table) use (&$oldTable, &$newTable, &$test) {
             $newTable = $table;
         });
 
         $this->assertCount(1, $schema->getTables(), 'there should be 1 table in the schema');
+        $this->assertNotSame($oldTable, $newTable, 'table definition should be made on a new table instance');
         $this->assertSame($newTable, $schema->getTable('bar'), 'the `bar` table instance in the schema should be the new table');
     }
 }
