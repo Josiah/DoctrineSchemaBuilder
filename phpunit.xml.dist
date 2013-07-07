@@ -1,0 +1,14 @@
+<phpunit
+    bootstrap="vendor/autoload.php"
+    colors="true">
+    <testsuites>
+        <testsuite name="DoctrineSchemaBuilder">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -1,0 +1,23 @@
+{
+    "name": "josiah/doctrine-schema-builder",
+    "description": "Provides a declarative interface for building a Doctrine DBAL Schema.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josiah",
+            "email": "josiah@jjs.id.au"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "~2.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7"
+    },
+    "autoload": {
+        "psr-0": { "Doctrine\\DBAL\\Schema\\Builder": "src/" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
