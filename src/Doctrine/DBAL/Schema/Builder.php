@@ -123,4 +123,47 @@ class Builder
 
         return $this;
     }
+
+    /**
+     * Defines a named foreign key relationship
+     *
+     * When a foreign key relationship exists with the same name on the database
+     * it will be replaced with this definition.
+     *
+     * @param string|Table $localTable     Local table
+     * @param array        $localColumns   Local columns
+     * @param string|Table $foreignTable   Foreign table
+     * @param array        $foreignColumns Foreign columns (default to primary key)
+     * @return Builder
+     */
+    public function defineNamedForeignKey($name, $localTable, array $localColumns, $foreignTable, array $foreignColumns = null, array $options = array())
+    {
+        // Load the local table
+        if (!$localTable instanceof Table) {
+            $localTable = $this->schema->getTable($localTable);
+        }
+
+        // Load the foreign table
+        if (!$foreignTable instanceof Table) {
+            $foreignTable = $this->schema->getTable($foreignTable);
+        }
+
+        // Where the foreign columns are not specified they are retrieved from
+        // the foreign tables primary key definition.
+        if (is_null($foreignColumns)) {
+            $foreignColumns = $foreignTable->getPrimaryKeyColumns();
+        }
+
+        // Where the foreign key exists, it should be removed for recreation
+        if ($localTable->hasForeignKey($name)) {
+            $localTable->removeForeignKey($name);
+        }
+
+        // Actual foreign key is added using the local Doctrine DBAL Table and
+        // referencing the other specified options
+        $localTable->addNamedForeignKeyConstraint($name, $foreignTable, $localColumns, $foreignColumns, $options);
+
+        // Method chaining is supported
+        return $this;
+    }
 }
