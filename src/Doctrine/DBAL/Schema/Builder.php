@@ -151,7 +151,11 @@ class Builder
         // Where the foreign columns are not specified they are retrieved from
         // the foreign tables primary key definition.
         if (is_null($foreignColumns)) {
-            $foreignColumns = $foreignTable->getPrimaryKeyColumns();
+            if (method_exists($foreignTable, 'getPrimaryKeyColumns')) {
+                $foreignColumns = $foreignTable->getPrimaryKeyColumns();
+            } else {
+                $foreignColumns = $foreignTable->getPrimaryKey()->getColumns();
+            }
         }
 
         // Where the foreign key exists, it should be removed for recreation

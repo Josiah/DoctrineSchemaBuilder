@@ -6,9 +6,10 @@ php:
     - 5.3
 
 env:
-    - DBAL_VERSION=2.1.*
     - DBAL_VERSION=2.2.*
     - DBAL_VERSION=2.3.*
+    - DBAL_VERSION=2.4.*
+    - DBAL_VERSION=2.5.*@dev
 
 before_script:
    - composer require doctrine/dbal:${DBAL_VERSION}

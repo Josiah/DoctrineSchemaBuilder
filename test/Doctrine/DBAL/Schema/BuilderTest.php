@@ -156,7 +156,7 @@ class BuilderTest extends TestCase
         $bar = new Table('bar', array(
             new Column('id', Type::getType('integer')),
         ));
-        $bar->setPrimaryKey(['id']);
+        $bar->setPrimaryKey(array('id'));
 
         $foo = new Table('foo', array(
             new Column('bar_id', Type::getType('integer')),
@@ -165,13 +165,13 @@ class BuilderTest extends TestCase
         $schema = new Schema(array($foo, $bar));
         $builder = new Builder($schema);
 
-        $builder->defineNamedForeignKey('FK_Foo_bar', 'foo', ['bar_id'], 'bar');
+        $builder->defineNamedForeignKey('FK_Foo_bar', 'foo', array('bar_id'), 'bar');
 
         $fk = $foo->getForeignKey('FK_Foo_bar');
         $this->assertEquals('foo', $fk->getLocalTableName(), 'foreign key should be on `foo`');
-        $this->assertEquals(['bar_id'], $fk->getLocalColumns(), 'foreign key have local column `bar_id` as the reference');
+        $this->assertEquals(array('bar_id'), $fk->getLocalColumns(), 'foreign key have local column `bar_id` as the reference');
         $this->assertEquals('bar', $fk->getForeignTableName(), 'foreign key should reference `bar`');
-        $this->assertEquals(['id'], $fk->getForeignColumns(), 'foreign key should reference the `id` column');
+        $this->assertEquals(array('id'), $fk->getForeignColumns(), 'foreign key should reference the `id` column');
     }
 
     public function testDefineNamedForeignKeyAsOverride()
@@ -179,21 +179,21 @@ class BuilderTest extends TestCase
         $bar = new Table('bar', array(
             new Column('id', Type::getType('integer')),
         ));
-        $bar->setPrimaryKey(['id']);
+        $bar->setPrimaryKey(array('id'));
 
         $foo = new Table('foo', array(
             new Column('bar_id', Type::getType('integer')),
         ));
-        $oldKey = $foo->addNamedForeignKeyConstraint('FK_Foo_bar', 'bar', ['bar_id'], ['baz']);
+        $oldKey = $foo->addNamedForeignKeyConstraint('FK_Foo_bar', 'bar', array('bar_id'), array('baz'));
 
         $schema = new Schema(array($foo, $bar));
         $builder = new Builder($schema);
 
-        $builder->defineNamedForeignKey('FK_Foo_bar', $foo, ['bar_id'], $bar, ['id']);
+        $builder->defineNamedForeignKey('FK_Foo_bar', $foo, array('bar_id'), $bar, array('id'));
 
         $fk = $foo->getForeignKey('FK_Foo_bar');
         $this->assertCount(1, $foo->getForeignKeys(), 'foreign key should have replaced exising key');
         $this->assertEquals('bar', $fk->getForeignTableName(), 'foreign key should reference the `bar` table');
-        $this->assertEquals(['id'], $fk->getForeignColumns(), 'foreign key should reference the `id` column');
+        $this->assertEquals(array('id'), $fk->getForeignColumns(), 'foreign key should reference the `id` column');
     }
 }
